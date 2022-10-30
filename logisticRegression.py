@@ -16,18 +16,25 @@ from sklearn.linear_model import LogisticRegression
 
 #--------------------DATA LOADING / CLEANING--------------------------------#
 #load in the data - 1 year of kickstarter data, 2021
-data = pd.read_csv("C:\\Users\\saipr\\Desktop\\Programming\\Kickstarter Classification\\cleaned.csv", index_col = 0)
+#data = pd.read_csv("C:\\Users\\saipr\\Desktop\\Programming\\Kickstarter Classification\\cleaned.csv", index_col = 0) #for vee's laptop
+#for running after downloading everything on the github repository - load in each "cleaned"
+data = pd.read_csv("cleaned1.csv")
+data2 = pd.read_csv("cleaned2.csv")
+data3 = pd.read_csv("cleaned3.csv")
+data = data.concat(data2, ignore_index = True)
+data = data.concat(data3, ignore_index = True)
+#now we have the full merged file
 print(data.head())
 print(data.columns)
 print(data.state.unique())
 
-#turn state into a binary method
+#turn state into a binary variable
 state2 = [0 for i in range(0, len(data))] #a column of zeroes
 for s in range(0, len(data.state)):
     #print(data.state[s])
     if(data.state[s] == "successful"):
         state2[s] = 1
-data['state2'] = state2 #state 2: electric boogaloo
+data['state2'] = state2 #state 2: electric boogaloo; basically a logistic regression is binary, so we're not making distinctions here
 print(data.info())
 
 #and enocode those categories 
